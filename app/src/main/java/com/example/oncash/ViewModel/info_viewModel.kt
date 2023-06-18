@@ -16,14 +16,22 @@ import kotlinx.coroutines.launch
 
 class info_viewModel : ViewModel() {
 
-    val InstructionsList : MutableLiveData<ArrayList<Instruction>> = MutableLiveData()
+    val ImagesList : MutableLiveData<ArrayList<String>> = MutableLiveData()
 
-    fun getInstrutionList(offerId: String) : MutableLiveData<ArrayList<Instruction>>{
+    fun getImages(offerId: String , category :String) : MutableLiveData<ArrayList<String>>{
         viewModelScope.launch{
-            InstructionsList.value = Info_FirebaseRepo().getInstructionList(offerId)
+            ImagesList.value = Info_FirebaseRepo().getInstructionList(offerId , category)
         }
 
-        return InstructionsList
+        return ImagesList
+    }
+
+    fun getOffers(offerId: String , category :String) : MutableLiveData<ArrayList<String>>{
+        viewModelScope.launch{
+            ImagesList.value = Info_FirebaseRepo().getOffers(offerId , category)
+        }
+
+        return ImagesList
     }
     fun updateOfferHistory(user : userData , offerId: String , offerPrice:String , offerName : String){
         viewModelScope.launch {

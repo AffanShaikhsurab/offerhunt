@@ -21,9 +21,9 @@ class OfferHistory_RecylerViewAdapter : RecyclerView.Adapter<OfferHistory_Recyle
         val price :TextView
         lateinit var  offerName :TextView
         init {
-            status = itemView.findViewById(com.example.oncash.R.id.offer_status)
+            status = itemView.findViewById(com.example.oncash.R.id.place_address)
             price = itemView.findViewById(R.id.offerHistory_price)
-            offerName = itemView.findViewById<TextView>(R.id.offerHistory_name)
+            offerName = itemView.findViewById<TextView>(R.id.places_name)
         }
     }
 

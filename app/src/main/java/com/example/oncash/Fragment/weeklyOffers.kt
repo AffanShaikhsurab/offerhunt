@@ -17,6 +17,7 @@ import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oncash.Component.Offer_RecylerViewAdapter
+import com.example.oncash.DataType.Offer
 import com.example.oncash.DataType.OfferList
 import com.example.oncash.DataType.userData
 import com.example.oncash.R
@@ -43,7 +44,7 @@ class weeklyOffers : Fragment() {
     var userData: userData  = userData("",0)
     lateinit var binding : FragmentWeeklyOffersBinding
     val offerViewModel: offer_viewmodel by viewModels()
-    lateinit var OfferList : OfferList
+    lateinit var OfferList : ArrayList<Offer>
 
 
 
@@ -71,6 +72,7 @@ class weeklyOffers : Fragment() {
             this?.let { ViewModelProvider(it).get(home_viewModel::class.java) }
         }
         lateinit var adapter:Offer_RecylerViewAdapter
+        val category : String = homeViewmodel!!.category
 
         homeViewmodel!!.getuserData().observe(viewLifecycleOwner){
             userData = it
@@ -81,26 +83,13 @@ class weeklyOffers : Fragment() {
                 LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
         }
 
-        homeViewmodel.getOfferList().observe(viewLifecycleOwner, Observer { OfferList ->
-            if (OfferList.weeklyOffersList.isNotEmpty()) {
+        homeViewmodel.getOfferList(category).observe(viewLifecycleOwner, Observer { OfferList ->
+            if (OfferList.isNotEmpty()) {
                 this.OfferList = OfferList
-                adapter.updateList(OfferList.weeklyOffersList)
+                adapter.updateList(OfferList)
             }
         })
 
-        view.findViewById<Button>(R.id.weeklyButton).setOnClickListener {
-            if (OfferList.weeklyOffersList.isNotEmpty()) {
-                adapter.updateList(OfferList.weeklyOffersList)
-            }
-        }
-
-        view.findViewById<Button>(R.id.monthlyButton).setOnClickListener {
-            if (OfferList.monthlyOfferList.isNotEmpty()) {
-                adapter.updateList(OfferList.monthlyOfferList)
-            }else{
-                Snackbar.make(view , "No Monthly Offers Available " , Snackbar.LENGTH_LONG).show()
-            }
-        }
 
     }
 

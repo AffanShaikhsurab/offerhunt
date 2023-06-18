@@ -24,6 +24,8 @@ class home_viewModel : ViewModel() {
     private val wallet : MutableLiveData<walletDatatype> = MutableLiveData()
     private val userData : MutableLiveData<userData> = MutableLiveData()
 
+    val category : String = ""
+
     //wallet
     private val withdrawalTransaction : MutableLiveData<ArrayList<withdrawalTransaction>> = MutableLiveData()
 
@@ -43,11 +45,11 @@ class home_viewModel : ViewModel() {
     }
 
     // weekly offer viewmodel
-    private val offerList : MutableLiveData<OfferList> = MutableLiveData()
+    private val offerList : MutableLiveData<ArrayList<Offer>> = MutableLiveData()
 
-    fun getOfferList() : MutableLiveData<OfferList> {
+    fun getOfferList(category : String) : MutableLiveData<ArrayList<Offer>> {
         viewModelScope.launch {
-            offerList.postValue(sortingComponent().sortOfferList(Offer_FIrebase().getData()))
+            offerList.postValue(Offer_FIrebase().getData(category))
             offer_AirtableDatabase().getData()
         }
         return offerList

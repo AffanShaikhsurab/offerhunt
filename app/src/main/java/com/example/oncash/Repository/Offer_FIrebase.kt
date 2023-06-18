@@ -12,9 +12,9 @@ import kotlinx.coroutines.withContext
 
 class Offer_FIrebase  {
 
-    suspend fun getData() : ArrayList<Offer>  = withContext(Dispatchers.IO){
+    suspend fun getData(category : String) : ArrayList<Offer>  = withContext(Dispatchers.IO){
        // FirebaseApp.initializeApp(context)
-        val data : DatabaseReference = FirebaseDatabase.getInstance().getReference("Offers")
+        val data : DatabaseReference = FirebaseDatabase.getInstance().getReference(category)
         val offerList : MutableLiveData<ArrayList<Offer>> = MutableLiveData()
         val response = ArrayList<Offer>()
         try {

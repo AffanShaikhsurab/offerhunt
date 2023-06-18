@@ -145,25 +145,8 @@ class Home : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        lifecycleScope.launch {
-            homeViewmodel.getOfferList()
-        }
 
 
-    }
-    private fun setWindowFlag(bits: Int, on: Boolean) {
-        val win = window
-        val winParams = win.attributes
-        if (on) {
-            winParams.flags = winParams.flags or bits
-        } else {
-            winParams.flags = winParams.flags and bits.inv()
-        }
-        win.attributes = winParams
-    }
 
     private fun getUserData() {
         homeViewmodel.getUserData(this)

@@ -11,13 +11,13 @@ class sortingComponent {
         val weeklyOffersList : ArrayList<Offer> =ArrayList()
         val monthlyOffersList : ArrayList<Offer> =ArrayList()
 
-        for (offer in offerList){
-            if (offer.Type == "weekly"){
-                weeklyOffersList.add(offer)
-            }else{
-                monthlyOffersList.add(offer)
-            }
-        }
+//        for (offer in offerList){
+//            if (offer.Type == "weekly"){
+//                weeklyOffersList.add(offer)
+//            }else{
+//                monthlyOffersList.add(offer)
+//            }
+//        }
 
         return OfferList(weeklyOffersList , monthlyOffersList)
 

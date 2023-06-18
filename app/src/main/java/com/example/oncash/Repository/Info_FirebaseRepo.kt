@@ -12,20 +12,37 @@ import kotlinx.coroutines.withContext
 
 class Info_FirebaseRepo {
 
-   suspend fun getInstructionList( offerId :String) :ArrayList<Instruction>  = withContext(Dispatchers.IO){
-        val response : ArrayList<Instruction> = ArrayList()
-        val data : DatabaseReference = FirebaseDatabase.getInstance().getReference("Offers").child(offerId).child("Instructions")
+   suspend fun getInstructionList( placeId :String  , category: String) :ArrayList<String>  = withContext(Dispatchers.IO){
+        val response : ArrayList<String> = ArrayList()
+        val data : DatabaseReference = FirebaseDatabase.getInstance().getReference(category).child(placeId).child("ImagesList")
        try {
            data.get().await().children.map { snapShot ->
-               val instruction = snapShot.value as String
-               val serialNumber = snapShot.key as String
-               response.add(Instruction(instruction , serialNumber))
+               val image = snapShot.value as String
+               response.add(image)
            }
        } catch (_: Exception) {
 
        }
 
        return@withContext response
+
+
+    }
+
+
+    suspend fun getOffers( placeId :String  , category: String) :ArrayList<String>  = withContext(Dispatchers.IO){
+        val response : ArrayList<String> = ArrayList()
+        val data : DatabaseReference = FirebaseDatabase.getInstance().getReference(category).child(placeId).child("Offers")
+        try {
+            data.get().await().children.map { snapShot ->
+                val image = snapShot.value as String
+                response.add(image)
+            }
+        } catch (_: Exception) {
+
+        }
+
+        return@withContext response
 
 
     }
