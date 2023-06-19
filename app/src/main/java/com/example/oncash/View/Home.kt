@@ -52,11 +52,9 @@ class Home : AppCompatActivity() {
 
                 } else {
                     userData.userNumber = roomDb.userQuery().getUserNumber()
-                    userData.userRecordId = roomDb.userQuery().getUserId()
+                    userData.userName = roomDb.userQuery().getUserId()
                     homeViewmodel.setUserData(userData)
-                    homeViewmodel.withdrawalTransaction(userData.userNumber)
-                    homeViewmodel.getOffersHistory(userData.userRecordId)
-                    homeViewmodel.getWallet(userData.userRecordId)
+                    homeViewmodel.getOffersHistory(userData.userNumber)
                 }
 
             }
@@ -123,25 +121,7 @@ class Home : AppCompatActivity() {
         }
 
 
-        binding.walletTextView.setOnClickListener {
-            startActivity(
-                Intent(this, Wallet::class.java).putExtra(
-                    "walletBalance",
-                    binding.walletTextView.text
-                ) .putExtra("userNumber", userData.userNumber.toString()).putExtra("userRecordId", userData.userRecordId))
 
-
-        }
-
-        binding.walletcardview.setOnClickListener {
-            startActivity(
-                Intent(this, Wallet::class.java).putExtra(
-                    "walletBalance",
-                    binding.walletTextView.text
-                ) .putExtra("userNumber", userData.userNumber.toString()).putExtra("userRecordId", userData.userRecordId))
-
-
-        }
 
     }
 

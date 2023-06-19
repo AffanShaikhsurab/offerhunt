@@ -1,6 +1,8 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven { url 'https://jitpack.io' }
+
     }
     dependencies {
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.14'
@@ -91,7 +93,11 @@ dependencies {
     }
 
 
+
+
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4"
+
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"

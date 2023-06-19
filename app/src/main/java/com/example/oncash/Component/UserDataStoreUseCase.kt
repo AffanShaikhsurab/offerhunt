@@ -24,15 +24,15 @@ class UserDataStoreUseCase {
         return@withContext context.dataStore.data.first()[longPreferencesKey("userNumber")]!!
     }
 
-    suspend fun retrieveUserRecordId(context: Context): String = withContext(Dispatchers.IO){
-        return@withContext context.dataStore.data.first()[stringPreferencesKey("userRecordId")]!!
+    suspend fun retrieveUsername(context: Context): String = withContext(Dispatchers.IO){
+        return@withContext context.dataStore.data.first()[stringPreferencesKey("username")]!!
     }
 
     suspend fun storeUser(context: Context, bool: Boolean, userNumber: Long , userRecordId:String) = withContext(Dispatchers.IO){
       context.dataStore.edit{
           it[longPreferencesKey("userNumber")] = userNumber
           it[booleanPreferencesKey("isUserLogin")] = bool
-          it[stringPreferencesKey("userRecordId")] = userRecordId
+          it[stringPreferencesKey("username")] = userRecordId
       }
     }
 }

@@ -32,18 +32,6 @@ class home_viewModel : ViewModel() {
 
 
     // wallet
-    fun withdrawalTransaction(userNumber :Long){
-        viewModelScope.launch {
-            withdrawalTransaction.value =   get_UserInfo_UseCase().getuserWithdrwalHistory(userNumber )
-
-        }
-
-    }
-
-    fun getWithdrawalTransaction():MutableLiveData<ArrayList<withdrawalTransaction>>{
-        return withdrawalTransaction
-    }
-
     // weekly offer viewmodel
     private val offerList : MutableLiveData<ArrayList<Offer>> = MutableLiveData()
 
@@ -56,7 +44,7 @@ class home_viewModel : ViewModel() {
     }
 //offer history viewmodel
 private val offerhistoryList : MutableLiveData<ArrayList<OfferHistoryRecord>> = MutableLiveData()
-    fun getOffersHistory(userId:String){
+    fun getOffersHistory(userId:Long){
         viewModelScope.launch {
             offerhistoryList.postValue(offerHistory_component().getOfferHIstory(userId = userId))
         }
@@ -68,14 +56,6 @@ private val offerhistoryList : MutableLiveData<ArrayList<OfferHistoryRecord>> = 
 
 //home viewmodel
 
-    fun getWallet(userRecordId :String) {
-        viewModelScope.launch {
-               Log.i("recordID" , userRecordId)
-                wallet.value = UserInfo_Airtable_Repo().getWallet(
-                        userRecordId
-                    )
-                }
-    }
 
     fun setUserData(user : userData){
         userData.postValue( user )
@@ -83,16 +63,12 @@ private val offerhistoryList : MutableLiveData<ArrayList<OfferHistoryRecord>> = 
 
     fun getUserData(context:Context) {
         viewModelScope.launch {
-          userData.postValue( userData(UserDataStoreUseCase().retrieveUserRecordId(context) ,  UserDataStoreUseCase().retrieveUserNumber(context)) )
+          userData.postValue( userData(UserDataStoreUseCase().retrieveUsername(context) ,  UserDataStoreUseCase().retrieveUserNumber(context)) )
         }
     }
 
     fun getuserData():MutableLiveData<userData>{
         return userData
-    }
-
-    fun getWalletPrice():MutableLiveData<walletDatatype>{
-        return wallet
     }
 
 }

@@ -7,7 +7,7 @@ import com.example.oncash.Repository.UserInfo_Airtable_Repo
 
 class offerHistory_component {
 
-    suspend  fun getOfferHIstory(userId : String) : ArrayList<OfferHistoryRecord>{
+    suspend  fun getOfferHIstory(userId : Long) : ArrayList<OfferHistoryRecord>{
            val list =  UserInfo_Airtable_Repo().getOfferHistory()
            val userOfferList : ArrayList<OfferHistoryRecord>  = ArrayList()
            for (record in list){

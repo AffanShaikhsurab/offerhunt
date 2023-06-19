@@ -14,6 +14,7 @@ import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.reflect.*
@@ -27,35 +28,11 @@ import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
 class UserInfo_Airtable_Repo {
-    private val apiKey = "keyCQq6gmGFzeqDCX"
+    private val apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRleXFycm51dnVjcWR2cWlhZGdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODcxOTMyMDQsImV4cCI6MjAwMjc2OTIwNH0.e9LrXje8t0L0X2H_t4MuIBJ_z1d6lx4zwBrXcj-DLCI"
     private val base = "appK86XkkYn9dx2vu"
 
 
-    suspend fun getWallet(userRecordId: String): walletDatatype = withContext(Dispatchers.IO) {
 
-        val client = HttpClient(CIO) {
-            install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                })
-            }
-        }
-
-        val tableId = "tblOwifipGGANDJPN"
-        val url = "https://api.airtable.com/v0/$base/$tableId/$userRecordId/"
-        val response = client.get(url) {
-            parameter(
-                "api_key", apiKey
-            )
-        }
-
-        val fields: JSONObject = JSONObject(response.body<String>()).getJSONObject("fields")
-        val current_bal = JSONObject(fields.toString()).getString("Wallet").toInt()
-        val total_bal = JSONObject(fields.toString()).getString("Total_Bal").toInt()
-
-        return@withContext walletDatatype(current_bal ,total_bal )
-    }
 
     suspend fun getUserInfo(): MutableLiveData<JSONArray> = withContext(Dispatchers.IO) {
         val client = HttpClient(CIO) {
@@ -86,35 +63,8 @@ class UserInfo_Airtable_Repo {
     }
 
 
-    suspend fun getWithdrawTransaction(): MutableLiveData<JSONArray> = withContext(Dispatchers.IO) {
-        val client = HttpClient(CIO) {
-            install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                })
-            }
-        }
-        val tableId = "tblqaEsr4ImCVFvZb"
-        val url = "https://api.airtable.com/v0/$base/$tableId/"
-        val withdrawalTransaction: MutableLiveData<JSONArray> = MutableLiveData()
-        try {
-            val response = client.get(url) {
-                parameter(
-                    "api_key", apiKey
-                )
-            }
 
-
-            withdrawalTransaction.postValue(JSONArray(JSONObject(response.body<String>()).getString("records")))
-        } catch (e: Exception) {
-            withdrawalTransaction.postValue(null)
-        }
-        return@withContext withdrawalTransaction
-
-    }
-
-    suspend fun createUser(number: Long, wallet: Int , total_bal :Int): String =
+    suspend fun createUser(number: Long, username :String):Int =
         withContext(Dispatchers.IO) {
             val client = HttpClient(CIO) {
                 install(ContentNegotiation) {
@@ -124,108 +74,30 @@ class UserInfo_Airtable_Repo {
                     })
                 }
             }
-            val tableId = "tblOwifipGGANDJPN"
-            val url = "https://api.airtable.com/v0/$base/$tableId/"
-            val userInfo = Records(Fields(number, wallet , total_bal))
-            val userRecordId: MutableLiveData<String> = MutableLiveData()
-
+            val url = "https://teyqrrnuvucqdvqiadgl.supabase.co/rest/v1/User/"
+            val userInfo = Records(Fields(number, username))
+            lateinit var response : HttpResponse
 
             try {
-                val response = client.post {
+
+                 response = client.post {
                     url(url)
+                    header("apikey", apiKey)
                     header("Authorization", "Bearer $apiKey")
                     contentType(ContentType.Application.Json)
                     setBody(userInfo)
                 }
-
-                userRecordId.postValue(JSONObject(response.body<String>()).getString("id").toString()).toString()
-                Log.i("userData" , JSONObject(response.body<String>()).getString("id").toString())
-
             } catch (e: Exception) {
                 Log.i("airtable", e.toString())
             }
 
-            return@withContext userRecordId.value.toString()
+           return@withContext response!!.status.value
 
         }
 
-    suspend fun updateWallet(number: Long, wallet: Int, userRecordId: String , total_bal: Int): String =
-        withContext(Dispatchers.IO) {
-            val client = HttpClient(CIO) {
-                install(ContentNegotiation) {
-                    json(Json {
-                        prettyPrint = true
-                        isLenient = true
-                    })
-                }
-            }
-            val tableId = "tblOwifipGGANDJPN"
-            val url = "https://api.airtable.com/v0/$base/$tableId/$userRecordId/"
 
 
-            val userInfo = Records(Fields(number, wallet , total_bal))
-            var status by Delegates.notNull<String>()
-            try {
-                val response = client.patch {
-                    url(url)
-                    header("Authorization", "Bearer $apiKey")
-                    contentType(ContentType.Application.Json)
-                    setBody(userInfo)
-                }
-                status = response.status.toString()
-                Log.i("airtabledata", response.body<String>().toString())
 
-            } catch (e: Exception) {
-                Log.i("airtable", e.toString())
-            }
-
-            return@withContext status
-
-        }
-
-    suspend fun withdrawRequest(
-        phone: Long,
-        RequestedAmount: Int,
-        WalletBalance: Int,
-        userRecordId: String,
-    ): withdrawalsuccess =
-        withContext(Dispatchers.IO) {
-            val client = HttpClient(CIO) {
-                install(ContentNegotiation) {
-                    json(Json {
-                        prettyPrint = true
-                        isLenient = true
-                    })
-                }
-            }
-            val tableId = "tblqaEsr4ImCVFvZb"
-            val url = "https://api.airtable.com/v0/$base/$tableId/"
-            val userInfo = RecordsX(FieldsX(RequestedAmount, phone, WalletBalance , "Pending"))
-            var date : String = ""
-            var status = ""
-            var walletstatus: Int = 0
-            var responseStatus by Delegates.notNull<String>()
-            try {
-                val response = client.post {
-                    url(url)
-                    header("Authorization", "Bearer $apiKey")
-                    contentType(ContentType.Application.Json)
-                    setBody(userInfo)
-                }
-                responseStatus = response.status.toString()
-                Log.i("userdataa" , response.body<String>().toString())
-                val data = JSONObject(response.body<String>()).getString("createdTime")
-
-                status = JSONObject(JSONObject(response.body<String>()).getString("fields")).getString("Status")
-                date =  data.toString().split("T").get(0).toString()
-                Log.i("dateee" , date.toString())
-                Log.i("dateee" , status)
-            } catch (e: Exception) {
-                Log.i("withdrawData", e.toString())
-            }
-
-            return@withContext withdrawalsuccess(withdrawalTransaction(  date ,  RequestedAmount.toString()   , status ,) , responseStatus)
-        }
 
    suspend fun updateOfferHistory(userData: userData ,offerId: String , offerPrice:String , offerName : String) = withContext(Dispatchers.IO){
 

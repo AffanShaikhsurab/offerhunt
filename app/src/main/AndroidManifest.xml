@@ -14,9 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Oncash"
-        tools:targetApi="33"
-        >
-
+        tools:targetApi="33">
+        <activity
+            android:name=".View.QrCode"
+            android:exported="false" />
         <activity
             android:name=".View.Login"
             android:exported="true">
@@ -25,6 +26,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -45,9 +47,7 @@
         </activity>
         <activity
             android:name=".View.Home"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

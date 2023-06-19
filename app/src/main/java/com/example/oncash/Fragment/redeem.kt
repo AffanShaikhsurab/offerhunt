@@ -1,13 +1,10 @@
 package com.example.oncash.Fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,11 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.oncash.Component.withdrawalTransaction_RecylerViewAdapter
 import com.example.oncash.DataType.withdrawalTransaction
-import com.example.oncash.R
 import com.example.oncash.ViewModel.home_viewModel
-import com.example.oncash.ViewModel.wallet_viewModel
-import com.example.oncash.databinding.ActivityWalletBinding
-import com.example.oncash.databinding.FragmentProfileFragmentBinding
 import com.example.oncash.databinding.FragmentRedeemBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch

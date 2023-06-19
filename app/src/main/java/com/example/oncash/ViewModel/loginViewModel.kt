@@ -20,22 +20,18 @@ import kotlinx.coroutines.withContext
 import kotlin.properties.Delegates
 
 class loginViewModel:ViewModel() {
-    private  var userData:MutableLiveData<UserData1> = MutableLiveData()
+    private  var reponse :MutableLiveData<Int> = MutableLiveData()
 
-    fun addUser(userNumber : Long ) {
+    fun addUser(userNumber : Long , username :String ) : MutableLiveData<Int> {
 
         viewModelScope.launch {
             withContext(Dispatchers.Main) {
-
-                userData.value = get_UserInfo_UseCase().loginManager(userNumber)
-
+              reponse.value  =  get_UserInfo_UseCase().registerUser(userNumber , username)
             }
         }
+        return reponse
     }
 
-    fun getUserData1(): MutableLiveData<UserData1>{
-        return userData
-    }
 
 
 

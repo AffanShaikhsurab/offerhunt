@@ -27,31 +27,29 @@ class Login : AppCompatActivity() {
             isUserLogin = UserDataStoreUseCase().retrieveUser(this@Login)
             if (isUserLogin == true) {
                 startActivity(Intent(this@Login, Home::class.java))
+            }else{
+                setContentView(binding.root)
             }
         }
 
-        setContentView(binding.root)
 
 
 
         binding.phoneButtonInput.setOnClickListener {
             val phone = binding.phoneInput.text.toString()
-
+            val username = " "
             if (phone.length == 10) {
 
-                viewModel.addUser(phone.toLong())
-                viewModel.getUserData1().observe(this, Observer { userData ->
-
-                    if (userData.isUserRegistered) {
+                viewModel.addUser(phone.toLong() , username).observe(this){ status_code ->
+                    if (status_code == 200) {
                         lifecycleScope.launch {
-                            Log.i("LoginData",userData.userRecordId.toString())
-                           UserDataStoreUseCase().storeUser(
+                            UserDataStoreUseCase().storeUser(
                                 this@Login,
-                                userData.isUserRegistered,
+                                true,
                                 phone.toLong(),
-                                userData.userRecordId
+                                username
                             )
-                           startActivity(Intent(this@Login, Home::class.java))
+                            startActivity(Intent(this@Login, Home::class.java))
 
 
                         }
@@ -62,22 +60,13 @@ class Login : AppCompatActivity() {
                             Snackbar.LENGTH_LONG
                         ).show()
                     }
-                    Log.i(
-                        "login Data",
-                        userData.isUserRegistered.toString() + userData.userRecordId
-                    )
 
 
-                })
+
+                }
+                }
 
 
-            } else {
-                Snackbar.make(
-                    binding.root,
-                    "Please Enter Your Correct Number",
-                    Snackbar.LENGTH_LONG
-                ).show()
-            }
 
         }
 
