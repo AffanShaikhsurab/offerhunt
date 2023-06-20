@@ -35,15 +35,17 @@ class Offer_RecylerViewAdapter(val userData :userData) : RecyclerView.Adapter<Of
     var context : Context?=null
     class viewholder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val name : TextView
-        val description :TextView
-        val price :TextView
-        val background : ImageView
+        val address :TextView
+        val min_offer :TextView
+        val max_offer : TextView
+        val image : ImageView
         lateinit var  offerId :String
         init {
-            name = itemView.findViewById(com.example.oncash.R.id.offerHistory_name)
-            description = itemView.findViewById(com.example.oncash.R.id.offer_status)
-            price = itemView.findViewById(R.id.offerHistory_price)
-            background = itemView.findViewById(R.id.offer_imageview)
+            name = itemView.findViewById(com.example.oncash.R.id.places_name)
+            address = itemView.findViewById(com.example.oncash.R.id.place_address)
+            min_offer = itemView.findViewById(R.id.min_offer)
+            max_offer = itemView.findViewById(R.id.offer_max_offer)
+            image = itemView.findViewById(R.id.offer_imageview)
         }
     }
 
@@ -61,12 +63,11 @@ class Offer_RecylerViewAdapter(val userData :userData) : RecyclerView.Adapter<Of
     }
 
     override fun onBindViewHolder(holder: viewholder, position: Int) {
-        holder.offerId = offerList[position].OfferId!!
         holder.name.text= offerList[position].Name
-        holder.description.text = offerList[position].Description
-        val text =  offerList[position].Price
-        holder.price.text = "₹ $text "
-        Glide.with(holder.itemView.context).load(offerList[position].Image).into(holder.background)
+        holder.max_offer.text = offerList[position].MaxDiscount
+        holder.min_offer.text = offerList[position].MinDiscount
+        holder.address.text = offerList[position].Address
+        Glide.with(holder.itemView.context).load(offerList[position].Image).into(holder.image)
 
         val url :URL = URL( offerList[position].Image )
 
@@ -96,17 +97,12 @@ class Offer_RecylerViewAdapter(val userData :userData) : RecyclerView.Adapter<Of
                 holder.itemView.context,
                 Info::class.java
             )
-                .putExtra("OfferId",offer_information.OfferId )
+
                 .putExtra("OfferName",offer_information.Name)
                 .putExtra("OfferImage",offer_information.Image)
-                .putExtra("OfferPrice",offer_information.Price)
-                .putExtra("OfferDescription",offer_information.Description)
-                .putExtra("OfferLink",offer_information.Link)
-                .putExtra("subid" , offer_information.subid)
-                .putExtra("subid2" , offer_information.payout)
-                .putExtra("recordId" , userData.userRecordId)
-                .putExtra("videoId" , offer_information.VideoId)
-                .putExtra("number" , userData.userNumber.toString())
+                .putExtra("OfferPrice",offer_information.Address)
+                .putExtra("PLaceId",offer_information.Id)
+                .putExtra("Category",offer_information.Category)
 
 
             holder.itemView.context.startActivity(

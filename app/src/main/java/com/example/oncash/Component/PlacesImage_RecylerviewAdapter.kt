@@ -5,23 +5,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.oncash.R
-import com.example.oncash.DataType.Instruction
 
 
-class Instructions_RecylerViewAdapter : RecyclerView.Adapter<Instructions_RecylerViewAdapter.viewholder>() {
-    var InstructionList : ArrayList<Instruction> = ArrayList<Instruction>()
+class PlacesImage_RecylerviewAdapter : RecyclerView.Adapter<PlacesImage_RecylerviewAdapter.viewholder>() {
+    var ImageList : ArrayList<String> = ArrayList<String>()
 
     var context : Context?=null
     class viewholder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val serialNumber : TextView
-        val description :TextView
+        val Image : ImageView
 
         init {
-            description = itemView.findViewById(R.id.withdrawalTransactionAmount)
-             serialNumber = itemView.findViewById(R.id.withdrawalTransactionDate)
+            Image = itemView.findViewById(R.id.place_image)
         }
     }
 
@@ -41,21 +39,20 @@ class Instructions_RecylerViewAdapter : RecyclerView.Adapter<Instructions_Recyle
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: viewholder, position: Int) {
 
-        holder.serialNumber.text= (position + 1 ).toString()
-        holder.description.text = InstructionList.get(position).instruction
+        Glide.with(holder.itemView.context).load(ImageList[position]).into(holder.Image)
 
     }
 
     override fun getItemCount(): Int {
 
-        return InstructionList.size
+        return ImageList.size
 
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(list :ArrayList<Instruction>){
-        this.InstructionList.clear()
-        this.InstructionList.addAll(list)
+    fun updateList(list :ArrayList<String>){
+        this.ImageList.clear()
+        this.ImageList.addAll(list)
         notifyDataSetChanged()
     }
 }
