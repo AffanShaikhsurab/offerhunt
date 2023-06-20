@@ -90,14 +90,14 @@ class redeem : Fragment() {
             binding.withdrawButton.setOnClickListener {
                 val requestAmount = binding.withdrawRequestedAmount.text.toString()
                 if (requestAmount.isNotEmpty()) {
-                    if (walletBalance.toInt() >= requestAmount.toInt()) {
+                    if (walletBalance >= requestAmount.toInt()) {
                         if (requestAmount.toInt() > 20) {
 
                             viewModel.withdrawRequest(
                                 userNumber,
                                 requestAmount.toInt(),
                                 walletBalance,
-                                userRecordId  ,
+                                userRecordId,
                             )
                             viewModel.getWithdrawalRequest().observe(viewLifecycleOwner) { status ->
                                 if (status.response.contains("200")) {

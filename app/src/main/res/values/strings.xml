@@ -14,14 +14,14 @@
     <string name="withdraw_earnings_string">withdraw earnings</string>
 
     <!-- profile strings -->
-        <string name="splash_message">Welcome to My App</string>
-        <string name="profile_name">John Doe</string>
-        <string name="profile_email">john.doe@example.com</string>
-        <string name="profile_phone">(123) 456-7890</string>
-        <string name="profile_location">San Francisco, CA</string>
-        <string name="profile_edit">Edit Profile</string>
-        <string name="menu_settings">Settings</string>
-        <string name="menu_help">Help &amp; Feedback</string>
+    <string name="splash_message">Welcome to My App</string>
+    <string name="profile_name">John Doe</string>
+    <string name="profile_email">john.doe@example.com</string>
+    <string name="profile_phone">(123) 456-7890</string>
+    <string name="profile_location">San Francisco, CA</string>
+    <string name="profile_edit">Edit Profile</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_help">Help &amp; Feedback</string>
     <string name="action_search">Search</string>
     <string name="action_notification">Notifications</string>
     <string name="action_cart">Cart</string>
@@ -51,4 +51,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ellipse_10">ellipse_10</string>
     <string name="pay_2">pay_2</string>
+    <string name="fs">Discover restaurants, salons, spas,
+events, activities and more lifestyle
+choices around you</string>
+    <string name="ss">Prepay and get guaranteed best deals
+on your favourite brands</string>
+    <string name="ts">Don\'t wish to prepay? Use nbPAY and
+get attractive discounts on entire bill</string>
 </resources>
