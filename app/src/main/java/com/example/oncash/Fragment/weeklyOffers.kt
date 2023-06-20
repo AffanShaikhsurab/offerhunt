@@ -5,27 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oncash.Component.Offer_RecylerViewAdapter
 import com.example.oncash.DataType.Offer
-import com.example.oncash.DataType.OfferList
 import com.example.oncash.DataType.userData
 import com.example.oncash.R
 import com.example.oncash.ViewModel.home_viewModel
 import com.example.oncash.ViewModel.offer_viewmodel
 import com.example.oncash.databinding.FragmentWeeklyOffersBinding
-import com.google.android.gms.common.util.DataUtils
-import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

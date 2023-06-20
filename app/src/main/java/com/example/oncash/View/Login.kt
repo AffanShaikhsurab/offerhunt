@@ -2,11 +2,8 @@ package com.example.oncash.View
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.oncash.Component.UserDataStoreUseCase
 import com.example.oncash.ViewModel.loginViewModel

@@ -11,15 +11,13 @@ import android.view.LayoutInflater
 import android.view.View
 import com.example.oncash.R
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.oncash.DataType.Offer
-import com.example.oncash.DataType.userData
+import com.example.oncash.DataType.recommendation
 import com.example.oncash.View.Info
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -28,7 +26,7 @@ import kotlinx.coroutines.withContext
 import java.net.URL
 
 
-class Offer_RecylerViewAdapter(val userData :userData) : RecyclerView.Adapter<Offer_RecylerViewAdapter.viewholder>() {
+class Offer_RecylerViewAdapter(val userData: MutableList<recommendation>) : RecyclerView.Adapter<Offer_RecylerViewAdapter.viewholder>() {
     var offerList : ArrayList<Offer> = ArrayList<Offer>()
     var lastPosition = -1
 

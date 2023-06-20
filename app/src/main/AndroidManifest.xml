@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Oncash"
         tools:targetApi="33">
         <activity
+            android:name=".View.OfferInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".View.QrCode"
             android:exported="false" />
         <activity
@@ -47,7 +50,7 @@
         </activity>
         <activity
             android:name=".View.Home"
-            android:exported="false"></activity>
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

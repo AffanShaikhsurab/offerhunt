@@ -1,17 +1,12 @@
 package com.example.oncash.View
 
-import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.oncash.DataType.OfferList
 import com.example.oncash.DataType.userData
@@ -20,8 +15,8 @@ import com.example.oncash.RoomDb.User
 import com.example.oncash.RoomDb.userDb
 import com.example.oncash.ViewModel.home_viewModel
 import com.example.oncash.databinding.ActivityHomeBinding
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
+import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,6 +27,10 @@ class Home : AppCompatActivity() {
     lateinit var OfferList : OfferList
     private  var userData: userData = userData("",0)
     lateinit var roomDb:userDb
+    private lateinit var  Offer_recycler:RecyclerView
+    private lateinit var dbref: DatabaseReference
+    val offer_list:MutableList<offer> = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,7 +123,6 @@ class Home : AppCompatActivity() {
 
 
     }
-
 
 
 

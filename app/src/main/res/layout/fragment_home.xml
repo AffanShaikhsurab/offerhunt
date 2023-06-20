@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.home">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:padding="2dp"
+tools:context=".home.MainActivity">
+
+<LinearLayout
+    android:id="@+id/catagory"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/border"
+    android:orientation="horizontal"
+    android:paddingTop="20dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.171"
+    tools:layout_editor_absoluteX="0dp">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"
+        android:src="@drawable/resto" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"
+        android:src="@drawable/grocary" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="4dp"
+        android:layout_weight="1"
+        android:src="@drawable/cooldrink" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:src="@drawable/coffie" />
+</LinearLayout>
+
+    <TextView
+    android:id="@+id/category_name"
+    android:layout_width="248dp"
+    android:layout_height="45dp"
+    android:layout_marginBottom="4dp"
+    android:focusable="auto"
+    android:fontFamily="sans-serif-black"
+    android:gravity="fill_horizontal|left"
+    android:paddingLeft="24dp"
+    android:text="Recoomendation"
+    android:textSize="20dp"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toTopOf="@+id/recomendation_recycler"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recomendation_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="264dp"
+        android:paddingRight="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.738"
+        tools:listitem="@layout/offer_recyerview" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
