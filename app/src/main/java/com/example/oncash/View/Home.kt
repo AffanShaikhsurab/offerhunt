@@ -29,7 +29,6 @@ class Home : AppCompatActivity() {
     lateinit var roomDb:userDb
     private lateinit var  Offer_recycler:RecyclerView
     private lateinit var dbref: DatabaseReference
-    val offer_list:MutableList<offer> = mutableListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
