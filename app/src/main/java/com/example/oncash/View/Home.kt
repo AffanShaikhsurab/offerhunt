@@ -135,14 +135,10 @@ class Home : AppCompatActivity() {
                     roomDb.userQuery().addUser(user = User(userData.userNumber , userData.userRecordId))
                 }
             }
-            homeViewmodel.withdrawalTransaction(data.userNumber)
             homeViewmodel.getOffersHistory(data.userRecordId)
-            homeViewmodel.getWallet(userData.userRecordId)
         })
 
-        homeViewmodel.getWalletPrice().observe(this, Observer { wallet ->
-            binding.walletTextView.text = wallet.currentBal.toString()
-        })
+
     }
     @Deprecated("Deprecated in Java", ReplaceWith("this.finish()"))
     override fun onBackPressed() {

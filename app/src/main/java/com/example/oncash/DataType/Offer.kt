@@ -1,3 +1,13 @@
 package com.example.oncash.DataType
 
-data class Offer(val Id : String , val Image : String ? = "", val Name : String ? ="", val Address : String ?="", val Category : String?="" , val MaxDiscount :String?= "" , val MinDiscount : String? = "")
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Offer(
+    val OfferId: Int,
+    val PlaceId: Int,
+    val Discount: Int,
+    val StartDate: String,
+    val EndDate: String,
+    val OfferImage :String
+)

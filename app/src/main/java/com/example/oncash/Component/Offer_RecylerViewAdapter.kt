@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
@@ -13,36 +12,25 @@ import com.example.oncash.R
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.oncash.DataType.Offer
-import com.example.oncash.DataType.recommendation
+import com.example.oncash.DataType.Places
 import com.example.oncash.View.Info
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.net.URL
 
 
-class Offer_RecylerViewAdapter(val userData: MutableList<recommendation>) : RecyclerView.Adapter<Offer_RecylerViewAdapter.viewholder>() {
-    var offerList : ArrayList<Offer> = ArrayList<Offer>()
+class Offer_RecylerViewAdapter() : RecyclerView.Adapter<Offer_RecylerViewAdapter.viewholder>() {
+    lateinit var offerList : ArrayList<Places>
     var lastPosition = -1
 
     var context : Context?=null
     class viewholder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val name : TextView
         val address :TextView
-        val min_offer :TextView
-        val max_offer : TextView
         val image : ImageView
         lateinit var  offerId :String
         init {
-            name = itemView.findViewById(com.example.oncash.R.id.places_name)
+            name = itemView.findViewById(com.example.oncash.R.id.place_name)
             address = itemView.findViewById(com.example.oncash.R.id.place_address)
-            min_offer = itemView.findViewById(R.id.min_offer)
-            max_offer = itemView.findViewById(R.id.offer_max_offer)
             image = itemView.findViewById(R.id.offer_imageview)
         }
     }
@@ -62,50 +50,27 @@ class Offer_RecylerViewAdapter(val userData: MutableList<recommendation>) : Recy
 
     override fun onBindViewHolder(holder: viewholder, position: Int) {
         holder.name.text= offerList[position].Name
-        holder.max_offer.text = offerList[position].MaxDiscount
-        holder.min_offer.text = offerList[position].MinDiscount
         holder.address.text = offerList[position].Address
-        Glide.with(holder.itemView.context).load(offerList[position].Image).into(holder.image)
-
-        val url :URL = URL( offerList[position].Image )
-
-        var colour  :String = ""
-        GlobalScope.launch { withContext(Dispatchers.IO) {
-            val background = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-            colour =  Integer.toHexString( getDominantColor(background)).substring(2)
-//            withContext(Dispatchers.Main){
-//                holder.background.background = linearGradientDrawable(colour)
-//            }
+        if (offerList[position].Banner!!.isNotEmpty()){
+            Glide.with(holder.itemView.context).load(offerList[position].Banner).into(holder.image)
         }
-            }
-//
-//        val animation = AnimationUtils.loadAnimation(
-//            context, if (position > lastPosition) {com.example.oncash.R.anim.offeranimation }else {com.example.oncash.R.anim.offeranimationdown}
-//        )
-//        holder.itemView.startAnimation(animation)
-//        lastPosition = position
-
-//            holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context , R.anim.offeranimation)
-
 
         holder.itemView.setOnClickListener {
-            Toast.makeText( holder.itemView.context, userData.userRecordId , Toast.LENGTH_LONG).show()
-            val offer_information : Offer = offerList.get(holder.offerId.toInt()-1)
+            val offer_information : Places = offerList.get(holder.offerId.toInt()-1)
             val intent = Intent(
                 holder.itemView.context,
                 Info::class.java
             )
 
-                .putExtra("OfferName",offer_information.Name)
-                .putExtra("OfferImage",offer_information.Image)
-                .putExtra("OfferPrice",offer_information.Address)
-                .putExtra("PLaceId",offer_information.Id)
+                .putExtra("PlaceName",offer_information.Name)
+                .putExtra("PlaceBanner",offer_information.Banner)
+                .putExtra("PlaceAddress",offer_information.Address)
+                .putExtra("PlaceId",offer_information.PlacesId)
                 .putExtra("Category",offer_information.Category)
 
 
             holder.itemView.context.startActivity(
                 intent
-
             )
         }
 
@@ -113,7 +78,7 @@ class Offer_RecylerViewAdapter(val userData: MutableList<recommendation>) : Recy
 
     override fun getItemCount(): Int {
 
-        return offerList.size
+        return offerList. size
 
     }
 
@@ -123,7 +88,7 @@ class Offer_RecylerViewAdapter(val userData: MutableList<recommendation>) : Recy
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(list :ArrayList<Offer>){
+    fun updateList(list :ArrayList<Places>){
 //        val result =  DiffUtil.calculateDiff( Diffutil(offerList , list))
         this.offerList.clear()
         this.offerList.addAll(list)

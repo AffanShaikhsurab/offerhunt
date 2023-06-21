@@ -35,7 +35,6 @@ class weeklyOffers : Fragment() {
     var userData: userData  = userData("",0)
     lateinit var binding : FragmentWeeklyOffersBinding
     val offerViewModel: offer_viewmodel by viewModels()
-    lateinit var OfferList : ArrayList<Offer>
 
 
 
@@ -63,21 +62,12 @@ class weeklyOffers : Fragment() {
             this?.let { ViewModelProvider(it).get(home_viewModel::class.java) }
         }
         lateinit var adapter:Offer_RecylerViewAdapter
-        val category : String = homeViewmodel!!.category
+        val category : Int = homeViewmodel!!.category
 
-        homeViewmodel!!.getuserData().observe(viewLifecycleOwner){
-            userData = it
-            val offerRecylerview: RecyclerView = view.findViewById(R.id.weeklyOffer_recylerview)
-             adapter = Offer_RecylerViewAdapter(userData)
-            offerRecylerview.adapter = adapter
-            offerRecylerview.layoutManager =
-                LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
-        }
 
-        homeViewmodel.getOfferList(category).observe(viewLifecycleOwner, Observer { OfferList ->
-            if (OfferList.isNotEmpty()) {
-                this.OfferList = OfferList
-                adapter.updateList(OfferList)
+        homeViewmodel.getOfferList(category).observe(viewLifecycleOwner, Observer { PlacesList ->
+            if (PlacesList.Places.isNotEmpty()) {
+                adapter.updateList(PlacesList.Places)
             }
         })
 

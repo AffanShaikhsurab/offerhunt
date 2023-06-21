@@ -24,7 +24,7 @@ class home_viewModel : ViewModel() {
     private val wallet : MutableLiveData<walletDatatype> = MutableLiveData()
     private val userData : MutableLiveData<userData> = MutableLiveData()
 
-    val category : String = ""
+    val category : Int = 1
 
     //wallet
     private val withdrawalTransaction : MutableLiveData<ArrayList<withdrawalTransaction>> = MutableLiveData()
@@ -33,12 +33,11 @@ class home_viewModel : ViewModel() {
 
     // wallet
     // weekly offer viewmodel
-    private val offerList : MutableLiveData<ArrayList<Offer>> = MutableLiveData()
+    private val offerList : MutableLiveData<PlacesList> = MutableLiveData()
 
-    fun getOfferList(category : String) : MutableLiveData<ArrayList<Offer>> {
+    fun getOfferList(category : Int) : MutableLiveData<PlacesList> {
         viewModelScope.launch {
-            offerList.postValue(Offer_FIrebase().getData(category))
-            offer_AirtableDatabase().getData()
+            offerList.postValue(UserInfo_Airtable_Repo().getPlaces(category))
         }
         return offerList
     }

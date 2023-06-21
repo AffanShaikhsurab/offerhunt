@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.oncash.DataType.PlaceImage
 import com.example.oncash.R
 
 
 class PlacesImage_RecylerviewAdapter : RecyclerView.Adapter<PlacesImage_RecylerviewAdapter.viewholder>() {
-    var ImageList : ArrayList<String> = ArrayList<String>()
+    var ImageList : ArrayList<PlaceImage> = ArrayList<PlaceImage>()
 
     var context : Context?=null
     class viewholder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -39,7 +40,7 @@ class PlacesImage_RecylerviewAdapter : RecyclerView.Adapter<PlacesImage_Recylerv
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: viewholder, position: Int) {
 
-        Glide.with(holder.itemView.context).load(ImageList[position]).into(holder.Image)
+        Glide.with(holder.itemView.context).load(ImageList[position].Image).into(holder.Image)
 
     }
 
@@ -50,7 +51,7 @@ class PlacesImage_RecylerviewAdapter : RecyclerView.Adapter<PlacesImage_Recylerv
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(list :ArrayList<String>){
+    fun updateList(list :ArrayList<PlaceImage>){
         this.ImageList.clear()
         this.ImageList.addAll(list)
         notifyDataSetChanged()

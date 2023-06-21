@@ -1,5 +1,7 @@
 package com.example.oncash.DataType
 
 import com.example.oncash.Fragment.weeklyOffers
+import kotlinx.serialization.Serializable
 
-data class OfferList(val weeklyOffersList: ArrayList<Offer> , val monthlyOfferList : ArrayList<Offer>)
+@Serializable
+data class OfferList(val Offers : ArrayList<Offer>)

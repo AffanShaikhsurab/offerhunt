@@ -20,6 +20,7 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.reflect.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.json.JSONArray
 import org.json.JSONObject
@@ -130,6 +131,139 @@ class UserInfo_Airtable_Repo {
        }
        Log.i("offerhistory" , status.status.value.toString())
    }
+
+    suspend fun getOfferData(offerid:Int): PlacesOffer = withContext(Dispatchers.IO) {
+        lateinit var offerData :PlacesOffer
+        val apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRleXFycm51dnVjcWR2cWlhZGdsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY4NzE5MzIwNCwiZXhwIjoyMDAyNzY5MjA0fQ.qLASNR8Rf4FMaDoZRUSTLF8lkvjrmhBj-3prw8yoSBs"
+        val client = HttpClient(CIO) {
+            install(ContentNegotiation) {
+                json(Json {
+                    prettyPrint = true
+                    isLenient = true
+                })
+            }
+        }
+
+        val url = "https://teyqrrnuvucqdvqiadgl.supabase.co/rest/v1/offers?offer_id=eq.$offerid&select=*"
+        lateinit var response: HttpResponse
+
+        try {
+            response = client.get {
+                url(url)
+                header("apikey", apikey)
+                header("Authorization", "Bearer $apikey")
+                contentType(ContentType.Application.Json)
+            }
+
+            if (response.status.isSuccess()) {
+                offerData =  Json.decodeFromString<PlacesOffer>(response.body())
+            }
+        } catch (e: Exception) {
+            Log.i("Supabase", e.toString())
+        }
+
+        return@withContext offerData
+    }
+
+    suspend fun getPlaces(categoryId: Int ): PlacesList = withContext(Dispatchers.IO) {
+        lateinit var offerData :PlacesList
+        val apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRleXFycm51dnVjcWR2cWlhZGdsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY4NzE5MzIwNCwiZXhwIjoyMDAyNzY5MjA0fQ.qLASNR8Rf4FMaDoZRUSTLF8lkvjrmhBj-3prw8yoSBs"
+        val client = HttpClient(CIO) {
+            install(ContentNegotiation) {
+                json(Json {
+                    prettyPrint = true
+                    isLenient = true
+                })
+            }
+        }
+
+        val url = "https://teyqrrnuvucqdvqiadgl.supabase.co/rest/v1/Places?Category=eq.$categoryId&select=*"
+        lateinit var response: HttpResponse
+
+        try {
+            response = client.get {
+                url(url)
+                header("apikey", apikey)
+                header("Authorization", "Bearer $apikey")
+                contentType(ContentType.Application.Json)
+            }
+
+            if (response.status.isSuccess()) {
+                offerData =  Json.decodeFromString<PlacesList>(response.body())
+            }
+        } catch (e: Exception) {
+            Log.i("Supabase", e.toString())
+        }
+
+        return@withContext offerData
+    }
+
+    suspend fun getImages(PlaceId: Int ): PlaceImages = withContext(Dispatchers.IO) {
+        lateinit var placeImages : PlaceImages
+        val apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRleXFycm51dnVjcWR2cWlhZGdsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY4NzE5MzIwNCwiZXhwIjoyMDAyNzY5MjA0fQ.qLASNR8Rf4FMaDoZRUSTLF8lkvjrmhBj-3prw8yoSBs"
+        val client = HttpClient(CIO) {
+            install(ContentNegotiation) {
+                json(Json {
+                    prettyPrint = true
+                    isLenient = true
+                })
+            }
+        }
+
+        val url = "https://teyqrrnuvucqdvqiadgl.supabase.co/rest/v1/Place_Images?Place id=eq.$PlaceId&select=*"
+        lateinit var response: HttpResponse
+
+        try {
+            response = client.get {
+                url(url)
+                header("apikey", apikey)
+                header("Authorization", "Bearer $apikey")
+                contentType(ContentType.Application.Json)
+            }
+
+            if (response.status.isSuccess()) {
+                placeImages =  Json.decodeFromString<PlaceImages>(response.body())
+            }
+        } catch (e: Exception) {
+            Log.i("Supabase", e.toString())
+        }
+
+        return@withContext placeImages
+    }
+
+    suspend fun getOffers(PlaceId: Int ): OfferList = withContext(Dispatchers.IO) {
+        lateinit var offers : OfferList
+        val apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRleXFycm51dnVjcWR2cWlhZGdsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY4NzE5MzIwNCwiZXhwIjoyMDAyNzY5MjA0fQ.qLASNR8Rf4FMaDoZRUSTLF8lkvjrmhBj-3prw8yoSBs"
+        val client = HttpClient(CIO) {
+            install(ContentNegotiation) {
+                json(Json {
+                    prettyPrint = true
+                    isLenient = true
+                })
+            }
+        }
+
+        val url = "https://teyqrrnuvucqdvqiadgl.supabase.co/rest/v1/offers?place_id=eq.$PlaceId&select=*"
+        lateinit var response: HttpResponse
+
+        try {
+            response = client.get {
+                url(url)
+                header("apikey", apikey)
+                header("Authorization", "Bearer $apikey")
+                contentType(ContentType.Application.Json)
+            }
+
+            if (response.status.isSuccess()) {
+                offers =  Json.decodeFromString<OfferList>(response.body())
+            }
+        } catch (e: Exception) {
+            Log.i("Supabase", e.toString())
+        }
+
+        return@withContext offers
+    }
+
 
     suspend fun getOfferHistory() : ArrayList<OfferHistoryRecord> = withContext(Dispatchers.IO){
 

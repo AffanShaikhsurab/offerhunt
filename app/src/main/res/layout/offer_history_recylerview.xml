@@ -29,7 +29,7 @@
             android:background="@drawable/rectangle_1" />
 
         <TextView
-            android:id="@+id/places_name"
+            android:id="@+id/place_address"
             android:layout_width="93dp"
             android:layout_height="13dp"
             android:layout_alignParentStart="true"
@@ -41,7 +41,7 @@
             />
 
         <TextView
-            android:id="@+id/offerHistory_name"
+            android:id="@+id/place_name"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -67,7 +67,7 @@
             android:layout_marginTop="42dp">
 
             <TextView
-                android:id="@+id/offerHistory_price"
+                android:id="@+id/place_banner"
                 android:layout_width="60dp"
                 android:layout_height="19dp"
                 android:layout_alignParentLeft="true"

@@ -19,6 +19,7 @@ import com.example.oncash.DataType.Offer
 import com.example.oncash.DataType.userData
 import com.example.oncash.Repository.offer_AirtableDatabase
 import com.example.oncash.ViewModel.info_viewModel
+import com.example.oncash.ViewModel.offerInfo_viewModel
 import com.example.oncash.databinding.ActivityInfoBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -33,34 +34,40 @@ class Info : AppCompatActivity() {
         setContentView(binding.root)
 
         //Getting Data from the intent form home(Activity)
-        val offerName= intent.getStringExtra("OfferName")
+        val offerName= intent.getStringExtra("PlaceName")
         binding.offernameInfo.text = offerName
-        val placeId= intent.getStringExtra("PLaceId")
+        val placeId= intent.getStringExtra("PlaceId")!!.toInt()
         val category= intent.getStringExtra("Category")
-        var offerAddress= intent.getStringExtra("OfferAddress")
+        var offerAddress= intent.getStringExtra("PlaceAddress")
         binding.offerAddress.text = offerAddress
-        Glide.with(this).load(intent.getStringExtra("OfferImage")).into(binding.offerImageInfo)
+
+        val banner : String ? = intent.getStringExtra("PlaceBanner")
+
+        if(banner.isNullOrEmpty()){
+            Glide.with(this).load(banner).into(binding.offerImageInfo)
+        }
  // Initilizing the recylerview adapter
         val adapter = PlacesImage_RecylerviewAdapter()
         binding.placeImages.adapter = adapter
         binding.placeImages.layoutManager = LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false)
 
-        val Offeradapter = PlacesOffer_RecylerviewAdapter()
+        val offerViewModel :offerInfo_viewModel by viewModels()
+        val Offeradapter = PlacesOffer_RecylerviewAdapter(offerViewModel)
         binding.placeOfferImage.adapter = Offeradapter
         binding.placeOfferImage.layoutManager = LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false)
 
         //Observing the getInstructionList() in info_viewmodel (ie which gets the data from info_FirebaseRepo)
         val info_viewModel : info_viewModel by viewModels()
 
-        info_viewModel.getImages(placeId!! , category!!).observe(this , Observer {
-            if (it.isNotEmpty()){
-                adapter.updateList(it)
+        info_viewModel.getImages(placeId!!).observe(this , Observer {
+            if (it.Images.isNotEmpty()){
+                adapter.updateList(it.Images)
             }
         })
 
-        info_viewModel.getOffers(placeId!! , category!!).observe(this , Observer {
-            if (it.isNotEmpty()){
-                Offeradapter.updateList(it)
+        info_viewModel.getOffers(placeId!!).observe(this , Observer {
+            if (it.Offers.isNotEmpty()){
+                Offeradapter.updateList(it.Offers)
             }
         })
 
