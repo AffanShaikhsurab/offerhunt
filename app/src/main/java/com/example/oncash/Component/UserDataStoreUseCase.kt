@@ -20,17 +20,17 @@ class UserDataStoreUseCase {
         return@withContext context.dataStore.data.first()[booleanPreferencesKey("isUserLogin")]
     }
 
-    suspend fun retrieveUserNumber(context: Context): Long = withContext(Dispatchers.IO){
-        return@withContext context.dataStore.data.first()[longPreferencesKey("userNumber")]!!
+    suspend fun retrieveUserNumber(context: Context): Int = withContext(Dispatchers.IO){
+        return@withContext context.dataStore.data.first()[intPreferencesKey("userNumber")]!!
     }
 
     suspend fun retrieveUsername(context: Context): String = withContext(Dispatchers.IO){
         return@withContext context.dataStore.data.first()[stringPreferencesKey("username")]!!
     }
 
-    suspend fun storeUser(context: Context, bool: Boolean, userNumber: Long , userRecordId:String) = withContext(Dispatchers.IO){
+    suspend fun storeUser(context: Context, bool: Boolean, userNumber: Int , userRecordId:String) = withContext(Dispatchers.IO){
       context.dataStore.edit{
-          it[longPreferencesKey("userNumber")] = userNumber
+          it[intPreferencesKey("userNumber")] = userNumber
           it[booleanPreferencesKey("isUserLogin")] = bool
           it[stringPreferencesKey("username")] = userRecordId
       }

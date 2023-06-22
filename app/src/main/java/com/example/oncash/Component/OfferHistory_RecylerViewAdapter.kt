@@ -9,11 +9,12 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.oncash.DataType.Offer
 import com.example.oncash.DataType.SerializedDataType.OfferHistory.OfferHistoryRecord
 
 
 class OfferHistory_RecylerViewAdapter : RecyclerView.Adapter<OfferHistory_RecylerViewAdapter.viewholder>() {
-    var offerList : ArrayList<OfferHistoryRecord> = ArrayList()
+    var offerList : ArrayList<Offer> = ArrayList()
 
     var context : Context?=null
     class viewholder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -34,17 +35,9 @@ class OfferHistory_RecylerViewAdapter : RecyclerView.Adapter<OfferHistory_Recyle
     }
 
     override fun onBindViewHolder(holder: viewholder, position: Int) {
-        holder.offerName.text = offerList.get(position).fields.OfferName
-        holder.status.text = offerList.get(position).fields.Status
-        holder.price.text = offerList.get(position).fields.Payout // holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context , R.anim.offeranimation)
-
-        var lastPosition = -1
-
-        val animation = AnimationUtils.loadAnimation(
-            context, if (position > lastPosition) {com.example.oncash.R.anim.offeranimation }else {com.example.oncash.R.anim.offeranimationdown}
-        )
-        holder.itemView.startAnimation(animation)
-        lastPosition = position
+        holder.offerName.text = offerList.get(position).OfferImage
+        holder.status.text = offerList.get(position).EndDate
+        holder.price.text = offerList.get(position).Discount.toString()
     }
 
     override fun getItemCount(): Int {
@@ -59,7 +52,7 @@ class OfferHistory_RecylerViewAdapter : RecyclerView.Adapter<OfferHistory_Recyle
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(list :ArrayList<OfferHistoryRecord>){
+    fun updateList(list :ArrayList<Offer>){
 //        val result =  DiffUtil.calculateDiff( Diffutil(offerList , list))
         this.offerList.clear()
         this.offerList.addAll(list)

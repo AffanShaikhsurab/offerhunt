@@ -1,20 +1,14 @@
 package com.example.oncash.ViewModel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.oncash.Component.UserDataStoreUseCase
-import com.example.oncash.Component.get_UserInfo_UseCase
 import com.example.oncash.Component.offerHistory_component
-import com.example.oncash.Component.sortingComponent
 import com.example.oncash.DataType.*
 import com.example.oncash.DataType.SerializedDataType.OfferHistory.OfferHistoryRecord
-import com.example.oncash.Repository.Offer_FIrebase
 import com.example.oncash.Repository.UserInfo_Airtable_Repo
-import com.example.oncash.Repository.offer_AirtableDatabase
-import com.example.oncash.RoomDb.userDb
 import io.ktor.http.*
 import kotlinx.coroutines.*
 
@@ -60,11 +54,7 @@ private val offerhistoryList : MutableLiveData<ArrayList<OfferHistoryRecord>> = 
         userData.postValue( user )
     }
 
-    fun getUserData(context:Context) {
-        viewModelScope.launch {
-          userData.postValue( userData(UserDataStoreUseCase().retrieveUsername(context) ,  UserDataStoreUseCase().retrieveUserNumber(context)) )
-        }
-    }
+
 
     fun getuserData():MutableLiveData<userData>{
         return userData

@@ -9,13 +9,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.oncash.Component.OfferHistory_RecylerViewAdapter
+import com.example.oncash.Component.UserDataStoreUseCase
 import com.example.oncash.R
 import com.example.oncash.ViewModel.home_viewModel
 import com.example.oncash.ViewModel.offer_history_viewModel
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +61,10 @@ class monthlyOffers : Fragment() {
         recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(view.context , LinearLayoutManager.VERTICAL ,false)
         recyclerView.layoutManager = layoutManager
+         var userId : Int = 0
+        lifecycleScope.launch {
+            userId = UserDataStoreUseCase().retrieveUserNumber(view.context)
+        }
 
         homeViewmodel = activity?.run {
             ViewModelProvider(this)[home_viewModel::class.java]
@@ -66,8 +73,10 @@ class monthlyOffers : Fragment() {
 //            Log.i("offerhistory" , it.userRecordId.toString() + "user id --")
 //           homeViewmodel.getOffersHistory(it.userRecordId)
 //        }
-        homeViewmodel.getOfferHistoryList().observe(viewLifecycleOwner) { offerhistory ->
-                adapter.updateList(offerhistory)
+        viewModel.getOffersHistory(userId = userId )
+
+        viewModel.getClamiedOffers().observe(viewLifecycleOwner) { offerhistory ->
+                adapter.updateList(offerhistory.Offers)
             }
         }
 

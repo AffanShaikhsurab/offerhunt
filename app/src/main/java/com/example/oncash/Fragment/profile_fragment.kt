@@ -49,8 +49,6 @@ class profile_fragment : Fragment() {
         homeViewmodel = activity.run{
             ViewModelProvider(this!!)[homeViewmodel::class.java]
         }
-        binding.currentBalance.text = homeViewmodel.getWalletPrice().value!!.currentBal.toString()
-        binding.totalBalance.text = homeViewmodel.getWalletPrice().value!!.totalBa.toString()
     }
     companion object {
         /**

@@ -77,7 +77,7 @@
             app:layout_constraintVertical_bias="0.121" />
 
         <Button
-            android:id="@+id/avil_offer"
+            android:id="@+id/avail_offer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -95,11 +95,15 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/avil_offer"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="53dp"
+            android:layout_toStartOf="@+id/avail_offer"
             android:gravity="center_horizontal|left"
             android:text="30%"
-            tools:layout_editor_absoluteX="6dp"
-            tools:layout_editor_absoluteY="58dp" />
+            app:layout_constraintEnd_toStartOf="@+id/avail_offer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,29 +34,29 @@ class Home : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        lifecycleScope.launch {
-            roomDb = Room.databaseBuilder(
-                applicationContext,
-                userDb::class.java,
-                "User"
-            ).build()
-
-            withContext(Dispatchers.IO)
-            {
-                if (roomDb.userQuery().getUserId().isNullOrEmpty()) {
-                    withContext(Dispatchers.Main){
-                        getUserData()
-                    }
-
-                } else {
-                    userData.userNumber = roomDb.userQuery().getUserNumber()
-                    userData.userName = roomDb.userQuery().getUserId()
-                    homeViewmodel.setUserData(userData)
-                    homeViewmodel.getOffersHistory(userData.userNumber)
-                }
-
-            }
-        }
+//        lifecycleScope.launch {
+//            roomDb = Room.databaseBuilder(
+//                applicationContext,
+//                userDb::class.java,
+//                "User"
+//            ).build()
+//
+//            withContext(Dispatchers.IO)
+//            {
+//                if (roomDb.userQuery().getUserId().isNullOrEmpty()) {
+//                    withContext(Dispatchers.Main){
+//                        getUserData()
+//                    }
+//
+//                } else {
+//                    userData.userNumber = roomDb.userQuery().getUserNumber()
+//                    userData.userName = roomDb.userQuery().getUserId()
+//                    homeViewmodel.setUserData(userData)
+//                    homeViewmodel.getOffersHistory(userData.userNumber)
+//                }
+//
+//            }
+//        }
 //        lifecycleScope.launch {
 //            getUserData()
 //        }
@@ -125,20 +125,20 @@ class Home : AppCompatActivity() {
 
 
 
-    private fun getUserData() {
-        homeViewmodel.getUserData(this)
-        homeViewmodel.getuserData().observe(this, Observer { data ->
-            userData = data!!
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO){
-                    roomDb.userQuery().addUser(user = User(userData.userNumber , userData.userRecordId))
-                }
-            }
-            homeViewmodel.getOffersHistory(data.userRecordId)
-        })
-
-
-    }
+//    private fun getUserData() {
+//        homeViewmodel.getUserData(this)
+//        homeViewmodel.getuserData().observe(this, Observer { data ->
+//            userData = data!!
+//            lifecycleScope.launch {
+//                withContext(Dispatchers.IO){
+//                    roomDb.userQuery().addUser(user = User(userData.userNumber , userData.userRecordId))
+//                }
+//            }
+//            homeViewmodel.getOffersHistory(data.userRecordId)
+//        })
+//
+//
+//    }
     @Deprecated("Deprecated in Java", ReplaceWith("this.finish()"))
     override fun onBackPressed() {
        this.finish()

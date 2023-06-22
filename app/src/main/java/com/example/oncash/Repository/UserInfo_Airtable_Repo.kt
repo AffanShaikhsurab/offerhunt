@@ -24,6 +24,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
@@ -96,41 +98,75 @@ class UserInfo_Airtable_Repo {
 
         }
 
-
-
-
-
-   suspend fun updateOfferHistory(userData: userData ,offerId: String , offerPrice:String , offerName : String) = withContext(Dispatchers.IO){
-
-       val base = "appK86XkkYn9dx2vu"
-       val tableId = "tblGyiEF9F9HpGuv2"
-       val url = "https://api.airtable.com/v0/$base/$tableId/"
-        val client = HttpClient(CIO){
-            install(ContentNegotiation){
-                Gson()
-                json(
-                    Json{
-                        isLenient = true
+    suspend fun setOffer(offerId : Int , userId : Int):Int =
+        withContext(Dispatchers.IO) {
+            val client = HttpClient(CIO) {
+                install(ContentNegotiation) {
+                    json(Json {
                         prettyPrint = true
-                    }
-                )
+                        isLenient = true
+                    })
+                }
             }
+            val url = "https://teyqrrnuvucqdvqiadgl.supabase.co/rest/v1/Claimedoffers"
+            val calender   = Calendar.getInstance()
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val date = dateFormat.format(calender.time).toString()
+            val userInfo = ClaimedOffer(offerId , userId , date)
+            lateinit var response : HttpResponse
+
+            try {
+
+                response = client.post {
+                    url(url)
+                    header("apikey", apiKey)
+                    header("Authorization", "Bearer $apiKey")
+                    contentType(ContentType.Application.Json)
+                    setBody(userInfo)
+                }
+            } catch (e: Exception) {
+                Log.i("airtable", e.toString())
+            }
+
+            return@withContext response!!.status.value
+
         }
 
-       val offerHistory =  OfferHistoryRecord(com.example.oncash.DataType.SerializedDataType.OfferHistory.Fields(userData.userRecordId , offerId ,  "Being Reviewed" , offerPrice ,offerName ))
 
-       Log.i("offerhistory" , "userid"+userData.userRecordId)
-       Log.i("offerhistory" , thereExists(getOfferHistory() , offerHistory).toString())
-       Log.i("offerhistory" , getOfferHistory().toString())
 
-       val status =  client.post {
-           url(url)
-           header("Authorization", "Bearer $apiKey")
-           contentType(ContentType.Application.Json)
-           setBody(offerHistory)
-       }
-       Log.i("offerhistory" , status.status.value.toString())
-   }
+
+
+//    suspend fun updateOfferHistory(userData: userData ,offerId: String , offerPrice:String , offerName : String) = withContext(Dispatchers.IO){
+//
+//       val base = "appK86XkkYn9dx2vu"
+//       val tableId = "tblGyiEF9F9HpGuv2"
+//       val url = "https://api.airtable.com/v0/$base/$tableId/"
+//        val client = HttpClient(CIO){
+//            install(ContentNegotiation){
+//                Gson()
+//                json(
+//                    Json{
+//                        isLenient = true
+//                        prettyPrint = true
+//                    }
+//                )
+//            }
+//        }
+//
+//       val offerHistory =  OfferHistoryRecord(com.example.oncash.DataType.SerializedDataType.OfferHistory.Fields(userData.userRecordId , offerId ,  "Being Reviewed" , offerPrice ,offerName ))
+//
+//       Log.i("offerhistory" , "userid"+userData.userRecordId)
+//       Log.i("offerhistory" , thereExists(getOfferHistory() , offerHistory).toString())
+//       Log.i("offerhistory" , getOfferHistory().toString())
+//
+//       val status =  client.post {
+//           url(url)
+//           header("Authorization", "Bearer $apiKey")
+//           contentType(ContentType.Application.Json)
+//           setBody(offerHistory)
+//       }
+//       Log.i("offerhistory" , status.status.value.toString())
+//   }
 
     suspend fun getOfferData(offerid:Int): PlacesOffer = withContext(Dispatchers.IO) {
         lateinit var offerData :PlacesOffer
@@ -265,32 +301,39 @@ class UserInfo_Airtable_Repo {
     }
 
 
-    suspend fun getOfferHistory() : ArrayList<OfferHistoryRecord> = withContext(Dispatchers.IO){
-
-
-        val base = "appK86XkkYn9dx2vu"
-        val tableId = "tblGyiEF9F9HpGuv2"
-        val url = "https://api.airtable.com/v0/$base/$tableId/"
-        val client = HttpClient(CIO){
-            install(ContentNegotiation){
-                Gson()
-                json(
-                    Json{
-                        isLenient = true
-                        prettyPrint = true
-                    }
-                )
+    suspend fun getClaimedOffer(userId: Int ): OfferList = withContext(Dispatchers.IO) {
+        lateinit var offers : OfferList
+        val apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRleXFycm51dnVjcWR2cWlhZGdsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY4NzE5MzIwNCwiZXhwIjoyMDAyNzY5MjA0fQ.qLASNR8Rf4FMaDoZRUSTLF8lkvjrmhBj-3prw8yoSBs"
+        val client = HttpClient(CIO) {
+            install(ContentNegotiation) {
+                json(Json {
+                    prettyPrint = true
+                    isLenient = true
+                })
             }
         }
 
-        val response = client.get(url) {
-            parameter(
-                "api_key", apiKey
-            ) }
-        val type = object : TypeToken<ArrayList<OfferHistoryRecord>>(){}.type
-        val jsonObject = JSONArray(JSONObject(response.body<String>()).getString("records"))
-        return@withContext Gson().fromJson( jsonObject.toString(), type )
+        val url = "https://teyqrrnuvucqdvqiadgl.supabase.co/rest/v1/Claimedoffers?user_id=eq.$userId&select=*"
+        lateinit var response: HttpResponse
+
+        try {
+            response = client.get {
+                url(url)
+                header("apikey", apikey)
+                header("Authorization", "Bearer $apikey")
+                contentType(ContentType.Application.Json)
+            }
+
+            if (response.status.isSuccess()) {
+                offers =  Json.decodeFromString<OfferList>(response.body())
+            }
+        } catch (e: Exception) {
+            Log.i("Supabase", e.toString())
+        }
+
+        return@withContext offers
     }
+
 
     suspend fun thereExists( list:kotlin.collections.ArrayList<OfferHistoryRecord> , element :OfferHistoryRecord):Boolean = withContext(Dispatchers.IO){
         var thereExisit = false

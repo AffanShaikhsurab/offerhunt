@@ -1,10 +1,14 @@
 package com.example.oncash.View
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.oncash.Component.UserDataStoreUseCase
 import com.example.oncash.DataType.Offer
 import com.example.oncash.DataType.PlacesOffer
 import com.example.oncash.DataType.Records
@@ -24,6 +28,7 @@ import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -38,8 +43,23 @@ class OfferInfoActivity : AppCompatActivity() {
         viewmodel.offer_info.observe(this){
             offer = it
         }
+        val avail_offer : Button = findViewById(R.id.avail_offer)
+        var userNumber : Int = 0
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO){
+                userNumber  =  UserDataStoreUseCase().retrieveUserNumber(this@OfferInfoActivity)
+            }
+        }
+        avail_offer.setOnClickListener{
+            if(userNumber!=0)
+            {
+                viewmodel.setOffer(offer.OfferId , userNumber)
+            }
+            startActivity(Intent(this , QrCode::class.java))
+        }
 
     }
+
 
 
 }

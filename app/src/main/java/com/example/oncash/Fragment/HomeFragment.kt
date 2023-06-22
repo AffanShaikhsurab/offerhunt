@@ -35,36 +35,13 @@ class HomeFragment : Fragment() {
 
         recommendation_Recycler = view.findViewById(R.id.recomendation_recycler)
         recommendation_Recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//
+//        val adapter = Offer_RecylerViewAdapter(recommendationList)
+//        recommendation_Recycler.adapter = adapter
 
-        val adapter = Offer_RecylerViewAdapter(recommendationList)
-        recommendation_Recycler.adapter = adapter
-
-        getOfferData()
 
         return view
     }
 
-    private fun getOfferData() {
-        dbref = FirebaseDatabase.getInstance().getReference("Restaurant")
-        dbref.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    recommendationList.clear()
-                    for (restaurantSnapshot in snapshot.children) {
-                        val recommendation = restaurantSnapshot.getValue(recommendation::class.java)
-                        if (recommendation != null) {
-                            recommendationList.add(recommendation)
-                            Log.d("Firebase Data", recommendation.toString())
-                        }
-                    }
-                    adapter.notifyDataSetChanged()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("Firebase Error", error.message)
-            }
-        })
-    }
 }
 
