@@ -1,19 +1,16 @@
 package com.example.oncash.Fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.example.oncash.Component.OfferHistory_RecylerViewAdapter
+import com.example.oncash.Component.RecylerviewAdapter.OfferHistory_RecylerViewAdapter
 import com.example.oncash.Component.UserDataStoreUseCase
 import com.example.oncash.R
 import com.example.oncash.ViewModel.home_viewModel

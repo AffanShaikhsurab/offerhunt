@@ -3,7 +3,6 @@ package com.example.oncash.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.oncash.Component.offerHistory_component
 import com.example.oncash.DataType.OfferList
 import com.example.oncash.DataType.PlaceImages
 import com.example.oncash.DataType.userData

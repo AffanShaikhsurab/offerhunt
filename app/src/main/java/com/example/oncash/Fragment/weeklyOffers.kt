@@ -8,12 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.oncash.Component.Offer_RecylerViewAdapter
-import com.example.oncash.DataType.Offer
+import com.example.oncash.Component.RecylerviewAdapter.Offer_RecylerViewAdapter
 import com.example.oncash.DataType.userData
-import com.example.oncash.R
 import com.example.oncash.ViewModel.home_viewModel
 import com.example.oncash.ViewModel.offer_viewmodel
 import com.example.oncash.databinding.FragmentWeeklyOffersBinding
@@ -61,7 +57,7 @@ class weeklyOffers : Fragment() {
         val homeViewmodel = activity.run{
             this?.let { ViewModelProvider(it).get(home_viewModel::class.java) }
         }
-        lateinit var adapter:Offer_RecylerViewAdapter
+        lateinit var adapter: Offer_RecylerViewAdapter
         val category : Int = homeViewmodel!!.category
 
 

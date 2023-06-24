@@ -1,11 +1,8 @@
 package com.example.oncash.ViewModel
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.oncash.Component.UserDataStoreUseCase
-import com.example.oncash.Component.offerHistory_component
 import com.example.oncash.DataType.*
 import com.example.oncash.DataType.SerializedDataType.OfferHistory.OfferHistoryRecord
 import com.example.oncash.Repository.UserInfo_Airtable_Repo

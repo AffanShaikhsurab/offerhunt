@@ -1,4 +1,4 @@
-package com.example.oncash.Component
+package com.example.oncash.Component.RecylerviewAdapter
 
 import android.annotation.SuppressLint
 import android.content.Context

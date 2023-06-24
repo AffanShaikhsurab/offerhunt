@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.oncash.Component.PlacesImage_RecylerviewAdapter
-import com.example.oncash.Component.PlacesOffer_RecylerviewAdapter
+import com.example.oncash.Component.RecylerviewAdapter.PlacesImage_RecylerviewAdapter
+import com.example.oncash.Component.RecylerviewAdapter.PlacesOffer_RecylerviewAdapter
 import com.example.oncash.ViewModel.info_viewModel
 import com.example.oncash.ViewModel.offerInfo_viewModel
 import com.example.oncash.databinding.ActivityInfoBinding

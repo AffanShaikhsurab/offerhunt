@@ -1,4 +1,4 @@
-package com.example.oncash.Component
+package com.example.oncash.Component.RecylerviewAdapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import com.example.oncash.R
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oncash.DataType.Offer
-import com.example.oncash.DataType.SerializedDataType.OfferHistory.OfferHistoryRecord
 
 
 class OfferHistory_RecylerViewAdapter : RecyclerView.Adapter<OfferHistory_RecylerViewAdapter.viewholder>() {

@@ -1,4 +1,4 @@
-package com.example.oncash.Component
+package com.example.oncash.Component.RecylerviewAdapter
 
 
 import android.content.Intent
